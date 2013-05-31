@@ -1,33 +1,29 @@
-class Platform{
+class Platform {
   float x;
   float y;
   float ySpeed;
   float l;
   float w;
   color c;
-  
-  
-  Platform( color tc, color tw, color tq){
+
+
+  Platform( color tc) {
     x=random(width);
-    y=random(50,100);
+    y=random(50, 100);
     ySpeed=1;
     l=30;
     w=100;
-    c=color(0,250,100);
     c=tc;
-    c=tq;
-    c=tw;
+   
   }
-  void display(){
+  void display() {
     fill(c);
     noStroke();
     rectMode(CENTER);
-    rect(x,y,w,l);
+    rect(x, y, w, l);
   }
-  void move(){
+  void move() {
     y=y+ySpeed;
-    
   }
-  
-    
 }
+
