@@ -28,5 +28,10 @@ class Player {
 }
 
 void bounce(){
-
+  y=y+yspeed;
+    yspeed=yspeed+gravity;
+    if(y+rad>height){
+      yspeed=-(abs(yspeed))*.975;
+    }
+  }
 }
