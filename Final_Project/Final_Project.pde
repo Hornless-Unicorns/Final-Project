@@ -20,11 +20,24 @@ void setup() {
   p[0]=new Platform(red);
 }
 void draw() {
-  if(gameStart){
+
+  if (gameStart==true) {
     background(0);
-    text("Click to Start",150,height/2);
+    text("Click to Start", 150, height/2);
     textSize(15);
   }
+
+  if (gameStart==false) {
+    game();
+  }
+  if (mousePressed) {
+    gameStart=false;
+  }
+}
+
+
+void game() {  
+  
   currentTime=millis();
   if (currentTime<10000 && !gameStart) {
     image(graveyard, 0, 0);
@@ -48,7 +61,9 @@ void draw() {
   }
 }
 
-void mousePressed(){
-  gameStart=!gameStart;
-}
+//void mousePressed(){
+//  
+//  gameStart=!gameStart;
+//  
+//}
 
