@@ -67,7 +67,16 @@ void game() {
   g.jump();
   
 }
-
+void keyPressed(){
+ if(key==CODED){
+  if(keyCode==RIGHT){
+   x=x+xspeed; 
+  }
+  if(keyCode==LEFT){
+   x=x-xspeed; 
+  }
+ } 
+}
 
 //void mousePressed(){
 //  
