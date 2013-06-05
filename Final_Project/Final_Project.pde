@@ -12,7 +12,7 @@ boolean gameStart=true;
 
 
 void setup() {
-
+//  frameRate(10);
   size(400, 800);
   graveyard=loadImage("Graveyard.jpg");
   farm= loadImage("Farm.jpg");
