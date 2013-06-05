@@ -61,9 +61,11 @@ void game() {
   for (int i=0; i<= count; i++) {
     p[i].display();
     p[i].move();
+    g.bounce(p[i]);
   }
   g.display();
-  g.bounce();
+  g.jump();
+  
 }
 
 
