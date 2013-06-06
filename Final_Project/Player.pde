@@ -18,7 +18,7 @@ class Player {
     l=125;
     yspeed=-1;
     gravity=.5;
-    bounceVel=20;
+    bounceVel=15;
   }
   void display() {
     ghost(x, y);
@@ -38,9 +38,9 @@ class Player {
   void jump() {
     y=y+yspeed;
     yspeed=yspeed+gravity;
-    if (y+l/2>height) {
-      yspeed=-(yspeed)*.975;
-    }
+//    if (y+l/2>height) {
+//      yspeed=-(yspeed)*.975;
+//    }
 
 
     if (keyPressed) {
@@ -61,26 +61,26 @@ class Player {
     }
   }
 
-  boolean checkCollision (Platform p) {
-    if (x>p.x-w/2 && x+w<p.x+p.w/2 &&  y+l/2>p.y - p.l/2 && y+l/2 < p.y + p.l/2) {
-      print("touch");
-      return true;
-    }
-    else {
-      print("...");
-      return false;
-    }
-  }
 
   void bounce(Platform p) {
     if (x< p.x + p.w && x + w> p.x && y+l/2+l/4  < p.y + p.l && y + l> p.y) {
       if (yspeed>0) {
         yspeed=-bounceVel;
-        //      y=y+yspeed;
-        //      yspeed=yspeed+gravity;
-        //      yspeed=-(yspeed)*.975;
+        
       }
     }
+  }
+  boolean gameover(){
+    if(y>=height){
+      background(0);
+      fill(255);
+      textSize(50);
+      text("GAME OVER", width/4, height/2);
+      return true;
+}
+else{
+  return false;
+}
   }
 }
 

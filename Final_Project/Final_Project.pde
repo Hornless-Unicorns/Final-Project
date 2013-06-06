@@ -12,18 +12,20 @@ color green;
 boolean gameStart=true;
 
 
+
 void setup() {
-//  frameRate(10);
-  size(400, 800);
+  //  frameRate(10);
+  size(600, 800);
   graveyard=loadImage("Graveyard.jpg");
   farm= loadImage("Farm.jpg");
   gray=color(150);
   green=color(0, 200, 100);
   //  p[0]=new Platform(gray);
   p=new ArrayList();
-  p.add(new Platform(gray, random(50, 200), 775));
-  p.add(new Platform(gray, random(50, 200), 700));
-  p.add(new Platform(gray, random(50, 200), 625));
+  p.add(new Platform(gray, width/2,700));
+  p.add(new Platform(gray, random(width), 600));
+  p.add(new Platform(gray, random(width), 400));
+  p.add(new Platform(gray, random(width), 300));
 
   g= new Player(width/2, height/2);
 }
@@ -48,60 +50,47 @@ void game() {
   for (int i=0; i<p.size(); i++) {
     g.bounce((Platform)p.get(i));
     ((Platform)p.get(i)).display();
-//    ((Platform)p.get(i)).move();
+    
   }
   g.display();
   g.jump();
+  g.gameover();
   adjust();
+  remove();
   morePlatforms();
 }
 
-void adjust(){
+void adjust() {
   float heightLimit = height/2 - g.y;
-  if(heightLimit>0){
+  if (heightLimit>0) {
     g.y=g.y+heightLimit;
-    for(int i=0; i<p.size(); i++){
+    for (int i=0; i<p.size(); i++) {
       ((Platform)p.get(i)).y += heightLimit;
     }
   }
-  }
-void morePlatforms(){
-  if(p.size() < 5){
-    p.add(new Platform(gray,random(50,200),300));
+  float heightMin = g.y-(height-g.l+200);
+  if (heightMin >0) {
+    g.y-= heightMin;
+    for (int i=0; i<p.size(); i++) {
+      ((Platform)p.get(i)).y -= heightMin;
+    }
   }
 }
-  
-//  currentTime=millis();
-//  if (currentTime<10000 && gameStart==false ) {
-//    image(graveyard, 0, 0);
-//    if (currentTime-oldTime>timer) {
-//      oldTime=currentTime;
-//      count++;
-//      p[count]= new Platform(gray);
-//    }
-//  }
-//  if (currentTime>10000 && gameStart==false ) {
-//    image(farm, 0, 0);
-//    if (currentTime-oldTime>2000) {
-//      oldTime=currentTime;
-//      count++;
-//      p[count]= new Platform(green);
-//    }
-//  }
-//
-//  for (int i=0; i<= count; i++) {
-//    p[i].display();
-//    p[i].move();
-//    g.bounce(p[i]);
-//  }
-//  g.display();
-//  g.jump();
-//}
+
+void remove() {
+  for (int i =p.size()-1; i>=0; i--) {
+    if (((Platform)p.get(i)).y>height) {
+
+      p.remove(i);
+    }
+  }
+}
+
+void morePlatforms() {
+  if (p.size() < 4) {
+    p.add(new Platform(gray, random(width), 300));
+  }
+}
 
 
-//void mousePressed(){
-//  
-//  gameStart=!gameStart;
-//  
-//}
 
