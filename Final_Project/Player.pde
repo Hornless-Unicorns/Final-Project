@@ -72,8 +72,8 @@ class Player {
     }
   }
 
-  void bounce(Platform p) {
-    if (x>p.x-w/2 && x+w<p.x+p.w/2 &&  y+l/2>p.y - p.l/2 && y+l/2 < p.y + p.l/2) {
+   void bounce(Platform p) {
+    if (x< p.x + p.w && x + w> p.x && y+l/2+l/4  < p.y + p.l && y + l> p.y) {
       if (yspeed>0) {
         yspeed=-bounceVel;
         //      y=y+yspeed;
