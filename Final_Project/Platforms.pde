@@ -7,9 +7,9 @@ class Platform {
   color c;
 
 
-  Platform( color tc) {
-    x=random(width);
-    y=random(50, 100);
+  Platform( color tc, float tx, float ty) {
+    x=tx;
+    y=ty;
     ySpeed=1;
     l=30;
     w=200;
@@ -19,11 +19,10 @@ class Platform {
   void display() {
     fill(c);
     noStroke();
-    rectMode(CENTER);
     rect(x, y, w, l);
   }
-  void move() {
-    y=y+ySpeed;
-  }
+//  void move() {
+//    y=y+ySpeed;
+//  }
 }
 
