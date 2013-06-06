@@ -13,7 +13,7 @@ boolean gameStart=true;
 
 
 void setup() {
-  frameRate(10);
+//  frameRate(10);
   size(400, 800);
   graveyard=loadImage("Graveyard.jpg");
   farm= loadImage("Farm.jpg");
@@ -52,7 +52,25 @@ void game() {
   }
   g.display();
   g.jump();
+  adjust();
+  morePlatforms();
 }
+
+void adjust(){
+  float heightLimit = height/2 - g.y;
+  if(heightLimit>0){
+    g.y=g.y+heightLimit;
+    for(int i=0; i<p.size(); i++){
+      ((Platform)p.get(i)).y += heightLimit;
+    }
+  }
+  }
+void morePlatforms(){
+  if(p.size() < 5){
+    p.add(new Platform(gray,random(50,200),300));
+  }
+}
+  
 //  currentTime=millis();
 //  if (currentTime<10000 && gameStart==false ) {
 //    image(graveyard, 0, 0);

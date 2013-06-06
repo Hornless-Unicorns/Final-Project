@@ -28,11 +28,11 @@ class Player {
     noStroke();
     fill(255);
     rect(x, y, w, l);
-    ellipse(x, y-35, 100, 100);
+    ellipse(x+50, y, 100, 100);
     fill(0);
-    ellipse(x+20, y-35, 25, 35);
-    ellipse(x-20, y-35, 25, 35);
-    ellipse(x, y, 25, 25);
+    ellipse(x+70, y-25, 25, 35);
+    ellipse(x+35, y-25, 25, 35);
+    ellipse(x+50, y, 25, 25);
   }
 
   void jump() {
