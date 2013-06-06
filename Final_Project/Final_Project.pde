@@ -14,25 +14,32 @@ boolean gameStart=true;
 
 
 void setup() {
-  //  frameRate(10);
+  
   size(600, 800);
   graveyard=loadImage("Graveyard.jpg");
   farm= loadImage("Farm.jpg");
   gray=color(150);
   green=color(0, 200, 100);
-  //  p[0]=new Platform(gray);
   p=new ArrayList();
-  p.add(new Platform(gray, width/2,700));
+  p.add(new Platform(gray, width/2, 700));
   p.add(new Platform(gray, random(width), 600));
+  p.add(new Platform(gray, random(width), 500));
   p.add(new Platform(gray, random(width), 400));
   p.add(new Platform(gray, random(width), 300));
+  p.add(new Platform(gray, random(width), 200));
+  p.add(new Platform(gray, random(width), 100));
+  p.add(new Platform(gray, random(width), 0));
+  p.add(new Platform(gray, random(width), -100));
+  p.add(new Platform(gray, random(width), -200));
 
   g= new Player(width/2, height/2);
+
 }
 void draw() {
   image(graveyard, 0, 0);
   if (gameStart==true) {
     background(0);
+    textSize(50);
     text("Click to Start", 150, height/2);
     textSize(15);
   }
@@ -50,7 +57,6 @@ void game() {
   for (int i=0; i<p.size(); i++) {
     g.bounce((Platform)p.get(i));
     ((Platform)p.get(i)).display();
-    
   }
   g.display();
   g.jump();
@@ -58,6 +64,7 @@ void game() {
   adjust();
   remove();
   morePlatforms();
+  restart();
 }
 
 void adjust() {
@@ -87,10 +94,17 @@ void remove() {
 }
 
 void morePlatforms() {
-  if (p.size() < 4) {
-    p.add(new Platform(gray, random(width), 300));
+  if (p.size() < 10) {
+    p.add(new Platform(gray, random(width), 0));
   }
 }
-
-
+void restart(){
+  if(g.y>=height){
+    if(keyPressed){
+      if(key=='r'){
+        setup();
+      }
+    }
+  }
+}
 
