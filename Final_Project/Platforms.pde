@@ -12,7 +12,7 @@ class Platform {
     y=random(50, 100);
     ySpeed=1;
     l=30;
-    w=100;
+    w=200;
     c=tc;
    
   }

@@ -5,7 +5,7 @@ Platform[] p= new Platform[1000];
 Player g;
 int currentTime;
 int oldTime;
-int timer=1000;
+int timer=7000;
 color gray;
 color green;
 boolean gameStart=true;
@@ -67,16 +67,7 @@ void game() {
   g.jump();
   
 }
-void keyPressed(){
- if(key==CODED){
-  if(keyCode==RIGHT){
-   x=x+xspeed; 
-  }
-  if(keyCode==LEFT){
-   x=x-xspeed; 
-  }
- } 
-}
+
 
 //void mousePressed(){
 //  

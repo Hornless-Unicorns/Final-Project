@@ -8,6 +8,7 @@ class Player {
   float yspeed;
   float xspeed;
   float gravity;
+  float bounceVel;
 
   Player(float tx, float ty) {
     x=width/2;
@@ -17,6 +18,7 @@ class Player {
     l=125;
     yspeed=-1;
     gravity=.5;
+    bounceVel=20;
   }
   void display() {
     ghost(x, y);
@@ -26,11 +28,11 @@ class Player {
     noStroke();
     fill(255);
     rect(x, y, w, l);
-    //    ellipse(x, y-35, 100, 100);
-    //    fill(0);
-    //    ellipse(x+20, y-35, 25, 35);
-    //    ellipse(x-20, y-35, 25, 35);
-    //    ellipse(x, y, 25, 25);
+    ellipse(x, y-35, 100, 100);
+    fill(0);
+    ellipse(x+20, y-35, 25, 35);
+    ellipse(x-20, y-35, 25, 35);
+    ellipse(x, y, 25, 25);
   }
 
   void jump() {
@@ -60,7 +62,7 @@ class Player {
   }
 
   boolean checkCollision (Platform p) {
-    if (x<p.x+w && x+w>p.x &&  y+l/2<p.y) {
+    if (x<p.x+w/2 && x+w>p.x-p.w/2 &&  y+l/2<p.y - p.l/2) {
       print("touch");
       return true;
     }
@@ -71,13 +73,12 @@ class Player {
   }
 
   void bounce(Platform p) {
-    if (checkCollision(p)) {
-      if (y+l/2 < p.y) {
-        y=y+yspeed;
-        yspeed=yspeed+gravity;
-        if (y+l/2 < p.y) {
-          yspeed=-(yspeed)*.975;
-        }
+    if (x>p.x-w/2 && x+w<p.x+p.w/2 &&  y+l/2>p.y - p.l/2 && y+l/2 < p.y + p.l/2) {
+      if (yspeed>0) {
+        yspeed=-bounceVel;
+        //      y=y+yspeed;
+        //      yspeed=yspeed+gravity;
+        //      yspeed=-(yspeed)*.975;
       }
     }
   }
