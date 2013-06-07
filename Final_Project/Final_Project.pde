@@ -1,4 +1,5 @@
 ArrayList p;
+ArrayList sP;
 PImage graveyard;
 PImage farm;
 int count=0;
@@ -14,7 +15,7 @@ boolean gameStart=true;
 
 
 void setup() {
-  
+
   size(600, 800);
   graveyard=loadImage("Graveyard.jpg");
   farm= loadImage("Farm.jpg");
@@ -32,8 +33,10 @@ void setup() {
   p.add(new Platform(gray, random(width), -100));
   p.add(new Platform(gray, random(width), -200));
 
-  g= new Player(width/2, height/2);
+  sP=new ArrayList();
+  sP.add(new superPlatform(green, random(width), -300));
 
+  g= new Player(width/2, height/2);
 }
 void draw() {
   image(graveyard, 0, 0);
@@ -58,6 +61,10 @@ void game() {
     g.bounce((Platform)p.get(i));
     ((Platform)p.get(i)).display();
   }
+  for(int j=0; j<sP.size(); j++){
+    g.superBounce((superPlatform)sP.get(j));
+    ((superPlatform)sP.get(j)).display();
+  }
   g.display();
   g.jump();
   g.gameover();
@@ -74,14 +81,20 @@ void adjust() {
     for (int i=0; i<p.size(); i++) {
       ((Platform)p.get(i)).y += heightLimit;
     }
-  }
-  float heightMin = g.y-(height-g.l+200);
-  if (heightMin >0) {
-    g.y-= heightMin;
-    for (int i=0; i<p.size(); i++) {
-      ((Platform)p.get(i)).y -= heightMin;
+    for (int j=0; j<sP.size(); j++) {
+      ((superPlatform)sP.get(j)).y += heightLimit;
     }
   }
+float heightMin = g.y-(height-g.l+200);
+if (heightMin >0) {
+  g.y-= heightMin;
+  for (int i=0; i<p.size(); i++) {
+    ((Platform)p.get(i)).y -= heightMin;
+  }
+  for (int j=0; j<sP.size(); j++) {
+    ((superPlatform)sP.get(j)).y -= heightMin;
+  }
+}
 }
 
 void remove() {
@@ -91,17 +104,25 @@ void remove() {
       p.remove(i);
     }
   }
+  for (int j= sP.size()-1; j>=0; j--) {
+    if (((superPlatform)sP.get(j)).y>height+1000) {
+      sP.remove(j);
+    }
+  }
 }
 
 void morePlatforms() {
   if (p.size() < 10) {
     p.add(new Platform(gray, random(width), 0));
   }
+  if (sP.size()<1) {
+    sP.add(new superPlatform(green, random(width), 0));
+  }
 }
-void restart(){
-  if(g.y>=height){
-    if(keyPressed){
-      if(key=='r'){
+void restart() {
+  if (g.y>=height) {
+    if (keyPressed) {
+      if (key=='r') {
         setup();
       }
     }

@@ -9,6 +9,7 @@ class Player {
   float xspeed;
   float gravity;
   float bounceVel;
+  float bounceVel2;
 
   Player(float tx, float ty) {
     x=width/2;
@@ -19,6 +20,7 @@ class Player {
     yspeed=-1;
     gravity=.5;
     bounceVel=15;
+    bounceVel2=30;
   }
   void display() {
     ghost(x, y);
@@ -38,9 +40,9 @@ class Player {
   void jump() {
     y=y+yspeed;
     yspeed=yspeed+gravity;
-//    if (y+l/2>height) {
-//      yspeed=-(yspeed)*.975;
-//    }
+    //    if (y+l/2>height) {
+    //      yspeed=-(yspeed)*.975;
+    //    }
 
 
     if (keyPressed) {
@@ -66,23 +68,30 @@ class Player {
     if (x< p.x + p.w && x + w> p.x && y+l/2+l/4  < p.y + p.l && y + l> p.y) {
       if (yspeed>0) {
         yspeed=-bounceVel;
-        
       }
     }
   }
-  boolean gameover(){
-    if(y>=height){
-      background(0);
-      fill(255);
-      textSize(50);
-      text("GAME OVER", width/4, height/2);
-      textSize(25);
-      text("Press r to restart",width/2, height-200);
-      return true;
-}
-else{
-  return false;
-}
+
+  void superBounce(superPlatform sP) {
+    if(x< sP.x + sP.w && x + w> sP.x && y+l/2+l/4  < sP.y + sP.l && y + l> sP.y) {
+      if (yspeed>0) {
+        yspeed=-bounceVel2;
+      }
+    }
   }
-}
+    boolean gameover() {
+      if (y>=height) {
+        background(0);
+        fill(255);
+        textSize(50);
+        text("GAME OVER", width/4, height/2);
+        textSize(25);
+        text("Press r to restart", width/2, height-200);
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+  }
 
