@@ -4,7 +4,7 @@ PImage graveyard;
 PImage farm;
 int count=0;
 //Platform[] p= new Platform[1000];
-Player g;
+Player2 g;
 int currentTime;
 int oldTime;
 int timer=7000;
@@ -37,7 +37,7 @@ void setup() {
   sP=new ArrayList();
   sP.add(new superPlatform(green, random(width), -300));
 
-  g= new Player(width/2, height/2);
+  g= new Player2(width/2, height/2);
 }
 void draw() {
   image(graveyard, 0, 0);

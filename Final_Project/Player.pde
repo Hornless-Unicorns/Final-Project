@@ -32,9 +32,9 @@ class Player {
     rect(x, y, w, l);
     ellipse(x+50, y, 100, 100);
     fill(0);
-    ellipse(x+70, y-25, 25, 35);
-    ellipse(x+35, y-25, 25, 35);
-    ellipse(x+50, y, 25, 25);
+    ellipse(x+70, y-10, 25, 35);
+    ellipse(x+35, y-10, 25, 35);
+    ellipse(x+50, y+10, 25, 25);
   }
 
   void jump() {
