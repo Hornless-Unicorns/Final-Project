@@ -128,6 +128,7 @@ void restart() {
     if (keyPressed) {
       if (key=='r') {
         setup();
+        bounceCount=0;
       }
     }
   }
