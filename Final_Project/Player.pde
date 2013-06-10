@@ -32,9 +32,21 @@ class Player {
     rect(x, y, w, l);
     ellipse(x+50, y, 100, 100);
     fill(0);
+<<<<<<< HEAD
     ellipse(x+70, y-10, 25, 35);
     ellipse(x+35, y-10, 25, 35);
     ellipse(x+50, y+20, 25, 25);
+=======
+<<<<<<< HEAD
+    ellipse(x+70, y-10, 25, 35);
+    ellipse(x+35, y-10, 25, 35);
+    ellipse(x+50, y+20, 25, 25);
+=======
+    ellipse(x+70, y-25, 25, 35);
+    ellipse(x+35, y-25, 25, 35);
+    ellipse(x+50, y, 25, 25);
+>>>>>>> parent of 5299071... added bloo
+>>>>>>> Rollback
   }
 
   void jump() {
