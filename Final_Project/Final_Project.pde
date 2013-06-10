@@ -4,14 +4,13 @@ PImage graveyard;
 PImage farm;
 int count=0;
 //Platform[] p= new Platform[1000];
-Player2 g;
+Player g;
 int currentTime;
 int oldTime;
 int timer=7000;
 color gray;
 color green;
 boolean gameStart=true;
-int bounceCount;
 
 
 
@@ -37,13 +36,10 @@ void setup() {
   sP=new ArrayList();
   sP.add(new superPlatform(green, random(width), -300));
 
-  g= new Player2(width/2, height/2);
+  g= new Player(width/2, height/2);
 }
 void draw() {
   image(graveyard, 0, 0);
-  textSize(50);
-  fill(255);
-  text(bounceCount,500,100);
   if (gameStart==true) {
     background(0);
     textSize(50);
@@ -128,7 +124,6 @@ void restart() {
     if (keyPressed) {
       if (key=='r') {
         setup();
-        bounceCount=0;
       }
     }
   }
