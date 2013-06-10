@@ -32,21 +32,9 @@ class Player {
     rect(x, y, w, l);
     ellipse(x+50, y, 100, 100);
     fill(0);
-<<<<<<< HEAD
-    ellipse(x+70, y-10, 25, 35);
-    ellipse(x+35, y-10, 25, 35);
-    ellipse(x+50, y+20, 25, 25);
-=======
-<<<<<<< HEAD
-    ellipse(x+70, y-10, 25, 35);
-    ellipse(x+35, y-10, 25, 35);
-    ellipse(x+50, y+20, 25, 25);
-=======
     ellipse(x+70, y-25, 25, 35);
     ellipse(x+35, y-25, 25, 35);
     ellipse(x+50, y, 25, 25);
->>>>>>> parent of 5299071... added bloo
->>>>>>> Rollback
   }
 
   void jump() {
@@ -80,7 +68,10 @@ class Player {
     if (x< p.x + p.w && x + w> p.x && y+l/2+l/4  < p.y + p.l && y + l> p.y) {
       if (yspeed>0) {
         yspeed=-bounceVel;
+        bounceCount= bounceCount+1;
+     
       }
+      
     }
   }
 
@@ -88,6 +79,8 @@ class Player {
     if(x< sP.x + sP.w && x + w> sP.x && y+l/2+l/4  < sP.y + sP.l && y + l> sP.y) {
       if (yspeed>0) {
         yspeed=-bounceVel2;
+        bounceCount= bounceCount+5;
+      
       }
     }
   }

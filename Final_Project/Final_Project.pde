@@ -11,6 +11,7 @@ int timer=7000;
 color gray;
 color green;
 boolean gameStart=true;
+int bounceCount;
 
 
 
@@ -40,6 +41,10 @@ void setup() {
 }
 void draw() {
   image(graveyard, 0, 0);
+  textSize(37);
+  fill(255);
+  text(bounceCount,525,100);
+  text("Bounces:",400,100);
   if (gameStart==true) {
     background(0);
     textSize(50);
@@ -124,6 +129,7 @@ void restart() {
     if (keyPressed) {
       if (key=='r') {
         setup();
+        bounceCount=0;
       }
     }
   }

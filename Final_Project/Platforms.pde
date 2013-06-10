@@ -21,9 +21,10 @@ class Platform {
     noStroke();
     rect(x, y, w, l);
   }
-//  void move() {
-//    y=y+ySpeed;
-//  }
+  void move() {
+    
+    y=y+ySpeed;
+  }
 }
 
 class superPlatform{
