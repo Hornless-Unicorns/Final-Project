@@ -44,7 +44,7 @@ void draw() {
   textSize(37);
   fill(255);
   text(bounceCount,525,100);
-  text("Bounces:",400,100);
+  text("Bounces:",300,100);
   if (gameStart==true) {
     background(0);
     textSize(50);
