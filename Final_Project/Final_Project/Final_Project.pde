@@ -101,7 +101,7 @@ void draw() {
     }
   }
 
-  if (bounceCount>=1) {
+  if (bounceCount>=100) {
     LEVEL=2;
   }
   if (LEVEL==2) {
