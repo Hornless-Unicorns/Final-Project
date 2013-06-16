@@ -98,7 +98,7 @@ void draw() {
     }
   }
 
-  if (bounceCount>=100) {
+  if (bounceCount>=1) {
     LEVEL=2;
   }
   if (LEVEL==2) {
@@ -252,17 +252,28 @@ void adjust2() {
 }
 
 void remove2() {
+  for (int i=p2.size()-1; i>=0; i--) {
+      if(b.bounce((Platform2)p2.get(i))){
+        p2.remove(i);
+    }
+    }
   for (int i =p2.size()-1; i>=0; i--) {
     if (((Platform2)p2.get(i)).y>height) {
 
       p2.remove(i);
     }
   }
+  for (int j=sP2.size()-1; j>=0; j--) {
+      if(b.superBounce((superPlatform2)sP2.get(j))){
+        sP2.remove(j);
+    }
+    }
   for (int j= sP2.size()-1; j>=0; j--) {
     if (((superPlatform2)sP2.get(j)).y>height+1488) {
       sP2.remove(j);
     }
   }
+  
 }
 
 void morePlatforms2() {

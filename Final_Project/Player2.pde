@@ -71,21 +71,25 @@ class Player2 {
   }
 
 
-  void bounce(Platform2 p2) {
-    if (x< p2.x + p2.w && x + w> p2.x && y+l/2+l/4  < p2.y + p2.l && y + l> p2.y) {
-      if (yspeed>0) {
+  boolean bounce(Platform2 p2) {
+    if (x< p2.x + p2.w && x + w> p2.x && y+l/2+l/4  < p2.y + p2.l && y + l> p2.y && yspeed>0) {
         yspeed=-bounceVel;
         bounceCount2= bounceCount2+1;
-      }
+        return true;
+    }
+    else{
+      return false;
     }
   }
 
-  void superBounce(superPlatform2 sP2) {
-    if(x< sP2.x + sP2.w && x + w> sP2.x && y+l/2+l/4  < sP2.y + sP2.l && y + l> sP2.y) {
-      if (yspeed>0) {
+  boolean superBounce(superPlatform2 sP2) {
+    if(x< sP2.x + sP2.w && x + w> sP2.x && y+l/2+l/4  < sP2.y + sP2.l && y + l> sP2.y && yspeed>0) {
         yspeed=-bounceVel2;
         bounceCount2= bounceCount2+5;
+        return true;
       }
+      else{
+        return false;
     }
   }
     boolean gameover() {
