@@ -1,11 +1,20 @@
+import ddf.minim.spi.*;
+import ddf.minim.signals.*;
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.ugens.*;
+import ddf.minim.effects.*;
+
+Minim minim;
+AudioPlayer fostersTheme;
+AudioPlayer ghostTheme;
 ArrayList p;
 ArrayList sP;
 ArrayList p2;
 ArrayList sP2;
 PImage graveyard;
-PImage farm;
+PImage fosters;
 int count=0;
-//Platform[] p= new Platform[1000];
 Player g;
 Player2 b;
 int currentTime;
@@ -27,22 +36,28 @@ void setup() {
 
   size(600, 800);
   graveyard=loadImage("Graveyard.jpg");
-  farm= loadImage("Farm.jpg");
+  fosters= loadImage("Fosters.jpg");
   gray=color(150);
   green=color(0, 200, 100);
   red= color(200, 100, 50);
   blue= color(50, 100, 250);
+  
+  minim = new Minim(this);
+  fostersTheme = minim.loadFile("Fosters_Theme.mp3");
+  ghostTheme= minim.loadFile("Ghost_Theme.mp3");
+  
+  
   p=new ArrayList();
   p.add(new Platform(gray, width/2, 700));
   p.add(new Platform(gray, random(width), 600));
-  p.add(new Platform(gray, random(width), 500));
-  p.add(new Platform(gray, random(width), 400));
-  p.add(new Platform(gray, random(width), 300));
-  p.add(new Platform(gray, random(width), 200));
-  p.add(new Platform(gray, random(width), 100));
+  p.add(new Platform(gray, random(width), 450));
+  p.add(new Platform(gray, random(width), 350));
+  p.add(new Platform(gray, random(width), 250));
+  p.add(new Platform(gray, random(width), 150));
+  p.add(new Platform(gray, random(width), 50));
   p.add(new Platform(gray, random(width), 0));
-  p.add(new Platform(gray, random(width), -100));
   p.add(new Platform(gray, random(width), -200));
+  p.add(new Platform(gray, random(width), -350));
 
   sP=new ArrayList();
   sP.add(new superPlatform(green, random(width), -300));
@@ -55,60 +70,70 @@ void setup() {
   p2.add(new Platform2(red, random(width), 400));
   p2.add(new Platform2(red, random(width), 200));
   p2.add(new Platform2(red, random(width), 0));
-  p2.add(new Platform2(red, random(width), -200));
-  p2.add(new Platform2(red, random(width), -400));
-  p2.add(new Platform2(red, random(width), -600));
-  p2.add(new Platform2(red, random(width), -800));
+  p2.add(new Platform2(red, random(width), -250));
+  p2.add(new Platform2(red, random(width), -500));
+  p2.add(new Platform2(red, random(width), -700));
+  p2.add(new Platform2(red, random(width), -900));
 
   sP2= new ArrayList();
-  sP2. add(new superPlatform2(blue, random(width), -500));
+  sP2. add(new superPlatform2(blue, random(width), -488));
 
   b= new Player2( width/2, height/2);
 }
 void draw() {
-  image(graveyard, 0, 0);
-  textSize(37);
-  fill(255);
-  text(bounceCount, 525, 100);
-  text("Bounces:", 300, 100);
-  if (gameStart==true) {
-    background(0);
-    textSize(50);
-    text("Click to Start", 150, height/2);
+  if (LEVEL==1) {
+    if (gameStart==true) {
+      
+      background(0);
+      textSize(50);
+      text("Click to Start", 150, height/2);
+    }
+    if (mousePressed) {
+      ghostTheme.loop();
+      gameStart=false;
+    }
+    if (gameStart==false) {
+      
+      game();
+    }
   }
 
-  if (gameStart==false) {
-    game();
-  }
-  if (mousePressed) {
-    gameStart=false;
-  }
-  if (bounceCount>=10) {
+  if (bounceCount>=100) {
     LEVEL=2;
-    
   }
   if (LEVEL==2) {
-    background(0);
-    //    textSize(50);
-    //    text("Level 2", 150, height/2);
-    //    textSize(15);
-    //    text("Click to Start", 150, 600);
-    level2();
-    fill(255);
-    text(bounceCount2, 525, 100);
-    text("Bounces:", 300, 100);
+    if (level2Start==true) {
+      ghostTheme.mute();
+      fostersTheme.loop();
+      background(0);
+      fill(255);
+      textSize(50);
+      text("Level 2", 150, height/2);
+      textSize(25);
+      text("Click to Start", 150, 600);
+    }
+    if (mousePressed) {
+      level2Start=false;
+    }
+    if (level2Start==false) {
+        
+      image(fosters, -200, -350);
+      level2();
+      fill(255);
+      text(bounceCount2, 525, 100);
+      text("Bounces:", 300, 100);
+    }
   }
-  //  if (level2Start==false) {
-  //    level2();
-  //  }
-  //  if (mousePressed) {
-  //    level2Start=false;
-  //  }
 }
 
 
 
-void game() {  
+void game() { 
+  image(graveyard, 0, 0);
+  textSize(37);
+  fill(255);
+  text(bounceCount, 525, 100);
+  text("Bounces:", 300, 100); 
   for (int i=0; i<p.size(); i++) {
     g.bounce((Platform)p.get(i));
     ((Platform)p.get(i)).display();
@@ -127,6 +152,7 @@ void game() {
 }
 
 void level2() {
+
   for (int i=0; i<p2.size(); i++) {
     b.bounce((Platform2)p2.get(i));
     ((Platform2)p2.get(i)).display();
@@ -196,6 +222,7 @@ void restart() {
       if (key=='r') {
         setup();
         bounceCount=0;
+        bounceCount2=0;
       }
     }
   }
@@ -232,7 +259,7 @@ void remove2() {
     }
   }
   for (int j= sP2.size()-1; j>=0; j--) {
-    if (((superPlatform2)sP2.get(j)).y>height+1500) {
+    if (((superPlatform2)sP2.get(j)).y>height+1488) {
       sP2.remove(j);
     }
   }

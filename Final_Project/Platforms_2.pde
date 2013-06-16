@@ -40,7 +40,7 @@ class superPlatform2{
     y=ty;
     ySpeed=1;
     l=30;
-    w=50;
+    w=100;
     c=tc;
   }
   

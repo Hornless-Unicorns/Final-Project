@@ -96,9 +96,12 @@ class Player2 {
         text("GAME OVER", width/4, height/2);
         textSize(25);
         text("Press r to restart", width/2, height-200);
+        fostersTheme.mute();
         return true;
       }
       else {
+        fostersTheme.play();
+       
         return false;
       }
     }
