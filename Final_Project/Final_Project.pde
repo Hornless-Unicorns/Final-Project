@@ -8,6 +8,8 @@ import ddf.minim.effects.*;
 Minim minim;
 AudioPlayer fostersTheme;
 AudioPlayer ghostTheme;
+AudioPlayer jumpSound;
+
 ArrayList p;
 ArrayList sP;
 ArrayList p2;
@@ -33,7 +35,7 @@ int LEVEL=1;
 
 
 void setup() {
-
+//  frameRate(10);
   size(600, 800);
   graveyard=loadImage("Graveyard.jpg");
   fosters= loadImage("Fosters.jpg");
@@ -41,12 +43,13 @@ void setup() {
   green=color(0, 200, 100);
   red= color(200, 100, 50);
   blue= color(50, 100, 250);
-  
+
   minim = new Minim(this);
   fostersTheme = minim.loadFile("Fosters_Theme.mp3");
   ghostTheme= minim.loadFile("Ghost_Theme.mp3");
-  
-  
+  jumpSound= minim.loadFile("Jump_sound.mp3");
+
+
   p=new ArrayList();
   p.add(new Platform(gray, width/2, 700));
   p.add(new Platform(gray, random(width), 600));
@@ -83,7 +86,7 @@ void setup() {
 void draw() {
   if (LEVEL==1) {
     if (gameStart==true) {
-      
+
       background(0);
       textSize(50);
       text("Click to Start", 150, height/2);
@@ -93,7 +96,7 @@ void draw() {
       gameStart=false;
     }
     if (gameStart==false) {
-      
+
       game();
     }
   }
@@ -116,7 +119,7 @@ void draw() {
       level2Start=false;
     }
     if (level2Start==false) {
-        
+
       image(fosters, -200, -350);
       level2();
       fill(255);
@@ -194,14 +197,24 @@ void adjust() {
 }
 
 void remove() {
+    for (int i=p.size()-1; i>=0; i--) {
+      if(g.bounce((Platform)p.get(i))){
+        p.remove(i);
+    }
+    }
   for (int i =p.size()-1; i>=0; i--) {
     if (((Platform)p.get(i)).y>height) {
 
       p.remove(i);
     }
   }
+  for (int j=sP.size()-1; j>=0; j--) {
+      if(g.superBounce((superPlatform)sP.get(j))){
+        sP.remove(j);
+    }
+    }
   for (int j= sP.size()-1; j>=0; j--) {
-    if (((superPlatform)sP.get(j)).y>height+1000) {
+    if (((superPlatform)sP.get(j)).y>height) {
       sP.remove(j);
     }
   }
@@ -209,10 +222,10 @@ void remove() {
 
 void morePlatforms() {
   if (p.size() < 10) {
-    p.add(new Platform(gray, random(width), 0));
+    p.add(new Platform(gray, random(width), -167));
   }
   if (sP.size()<1) {
-    sP.add(new superPlatform(green, random(width), 0));
+    sP.add(new superPlatform(green, random(width), -1000));
   }
 }
 
