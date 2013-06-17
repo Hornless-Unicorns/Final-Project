@@ -8,6 +8,9 @@ import ddf.minim.effects.*;
 Minim minim;
 AudioPlayer fostersTheme;
 AudioPlayer ghostTheme;
+AudioPlayer heavenTheme;
+AudioPlayer winner;
+
 ArrayList p;
 ArrayList sP;
 ArrayList p2;
@@ -19,6 +22,7 @@ PImage fosters;
 PImage heaven;
 Player g;
 Player2 b;
+Player3 a;
 color gray;
 color green;
 color red;
@@ -28,6 +32,7 @@ color purple;
 boolean gameStart=true;
 boolean level2Start=true;
 boolean level3Start=true;
+boolean gameComplete=true;
 int bounceCount;
 int bounceCount2;
 int bounceCount3;
@@ -49,8 +54,11 @@ void setup() {
   purple= color(140, 15, 230);
 
   minim = new Minim(this);
-  fostersTheme = minim.loadFile("Fosters_Theme2.mp3");
+
   ghostTheme= minim.loadFile("Ghost_Theme.mp3");
+  fostersTheme = minim.loadFile("Fosters_Theme2.mp3");
+  heavenTheme= minim.loadFile("Heaven_Theme.mp3");
+  winner= minim.loadFile("Winner_Theme.mp3");
 
 
   p=new ArrayList();
@@ -95,6 +103,8 @@ void setup() {
 
   sP3=new ArrayList();
   sP3.add(new superPlatform3(purple, random(width), -1000));
+
+  a= new Player3(width/2, height/2);
 }
 void draw() {
   if (LEVEL==1) {
@@ -124,9 +134,9 @@ void draw() {
       background(0);
       fill(255);
       textSize(50);
-      text("Level 2", 150, height/2);
+      text("Level 2", width/2, height/2);
       textSize(25);
-      text("Click to Start", 150, 600);
+      text("Click to Start", width/2, 600);
     }
     if (mousePressed) {
       level2Start=false;
@@ -146,6 +156,7 @@ void draw() {
   if (LEVEL==3) {
     if (level3Start==true) {
       fostersTheme.mute();
+      heavenTheme.loop();
       background(0);
       fill(255);
       textSize(50);
@@ -157,11 +168,24 @@ void draw() {
       level3Start=false;
     }
     if (level3Start==false) {
-      image(heaven,-427,0);
+      image(heaven, -427, 0);
       level3();
       fill(255);
       text(bounceCount3, 525, 100);
       text("Bounces:", 300, 100);
+    }
+  }
+  if (bounceCount3>=50) {
+    LEVEL=4;
+  }
+  if (LEVEL==4) {
+    if (gameComplete==true) {
+      heavenTheme.mute();
+      winner.play();
+      background(0);
+      fill(random(255), random(255), random(255));
+      textSize(50);
+      text("YOU WIN!!!", width/2, height/2);
     }
   }
 }
@@ -210,8 +234,24 @@ void level2() {
   restart();
 }
 
-void level3(){}
-  
+void level3() {
+  for (int i=0; i<p3.size(); i++) {
+    a.bounce((Platform3)p3.get(i));
+    ((Platform3)p3.get(i)).display();
+  }
+  for (int j=0; j<sP3.size(); j++) {
+    a.superBounce((superPlatform3)sP3.get(j));
+    ((superPlatform3)sP3.get(j)).display();
+  }
+  a.display();
+  a.jump();
+  a.gameover();
+  adjust3();
+  remove3();
+  morePlatforms3();
+  restart();
+}
+
 
 void adjust() {
   float heightLimit = height/2 - g.y;
@@ -255,7 +295,7 @@ void remove() {
     }
   }
   for (int j= sP.size()-1; j>=0; j--) {
-    if (((superPlatform)sP.get(j)).y>height+1000) {
+    if (((superPlatform)sP.get(j)).y>height) {
       sP.remove(j);
     }
   }
@@ -263,20 +303,21 @@ void remove() {
 
 void morePlatforms() {
   if (p.size() < 10) {
-    p.add(new Platform(gray, random(width), 0));
+    p.add(new Platform(gray, random(width), -100));
   }
   if (sP.size()<1) {
-    sP.add(new superPlatform(green, random(width), 0));
+    sP.add(new superPlatform(green, random(width), -1000));
   }
 }
 
 void restart() {
-  if (g.y>=height || b.y>height) {
+  if (g.y>=height || b.y>height || a.y>height) {
     if (keyPressed) {
       if (key=='r') {
         setup();
         bounceCount=0;
         bounceCount2=0;
+        bounceCount3=0;
       }
     }
   }
@@ -323,7 +364,7 @@ void remove2() {
     }
   }
   for (int j= sP2.size()-1; j>=0; j--) {
-    if (((superPlatform2)sP2.get(j)).y>height+1488) {
+    if (((superPlatform2)sP2.get(j)).y>height) {
       sP2.remove(j);
     }
   }
@@ -331,10 +372,67 @@ void remove2() {
 
 void morePlatforms2() {
   if (p2.size() < 7) {
-    p2.add(new Platform2(red, random(width), 0));
+    p2.add(new Platform2(red, random(width), -150));
   }
   if (sP2.size()<1) {
-    sP2.add(new superPlatform2(blue, random(width), 0));
+    sP2.add(new superPlatform2(blue, random(width), -1500));
+  }
+}
+
+void adjust3() {
+  float heightLimit = height/2 - a.y;
+  if (heightLimit>0) {
+    a.y=a.y+heightLimit;
+    for (int i=0; i<p3.size(); i++) {
+      ((Platform3)p3.get(i)).y += heightLimit;
+    }
+    for (int j=0; j<sP3.size(); j++) {
+      ((superPlatform3)sP3.get(j)).y += heightLimit;
+    }
+  }
+  float heightMin = a.y-(height-a.l+200);
+  if (heightMin >0) {
+    a.y-= heightMin;
+    for (int i=0; i<p3.size(); i++) {
+      ((Platform3)p3.get(i)).y -= heightMin;
+    }
+    for (int j=0; j<sP3.size(); j++) {
+      ((superPlatform3)sP3.get(j)).y -= heightMin;
+    }
+  }
+}
+
+void remove3() {
+  for (int i=p3.size()-1; i>=0; i--) {
+    if (a.bounce((Platform3)p3.get(i))) {
+      p3.remove(i);
+    }
+  }
+
+  for (int i =p3.size()-1; i>=0; i--) {
+    if (((Platform3)p3.get(i)).y>height) {
+
+      p3.remove(i);
+    }
+  }
+  for (int j=sP3.size()-1; j>=0; j--) {
+    if (a.superBounce((superPlatform3)sP3.get(j))) {
+      sP3.remove(j);
+    }
+  }
+  for (int j= sP3.size()-1; j>=0; j--) {
+    if (((superPlatform3)sP3.get(j)).y>height) {
+      sP3.remove(j);
+    }
+  }
+}
+
+void morePlatforms3() {
+  if (p3.size() < 5) {
+    p3.add(new Platform3(yellow, random(width), -200));
+  }
+  if (sP3.size()<1) {
+    sP3.add(new superPlatform3(purple, random(width), -2000));
   }
 }
 
