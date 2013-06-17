@@ -1,3 +1,9 @@
+//Bring Bloo back from the depths of the cartoon grave to cartoon heaven in this game where you bounce him higher.
+//Use the arrow keys to guide bloo to the top of cartoon heaven.
+//After 50 bounces on each level, you will proceed to the next one.
+//There are three levels in total.
+
+//Created the sound library
 import ddf.minim.spi.*;
 import ddf.minim.signals.*;
 import ddf.minim.*;
@@ -5,37 +11,50 @@ import ddf.minim.analysis.*;
 import ddf.minim.ugens.*;
 import ddf.minim.effects.*;
 
+//There is a sound for level 1, 2,3, and the winner screen. 
 Minim minim;
-AudioPlayer fostersTheme;
 AudioPlayer ghostTheme;
+AudioPlayer fostersTheme;
 AudioPlayer heavenTheme;
 AudioPlayer winner;
-
+//There is an arraylist for each platform class. 
 ArrayList p;
 ArrayList sP;
 ArrayList p2;
 ArrayList sP2;
 ArrayList p3;
 ArrayList sP3;
+
+//Called in the Images for the background.
 PImage graveyard;
 PImage fosters;
 PImage heaven;
+
+//The variables for the ghost, bloo, and angel.
 Player g;
 Player2 b;
 Player3 a;
+
+//Used various colors for the platforms
 color gray;
 color green;
 color red;
 color blue;
 color yellow;
 color purple;
+
+//Booleans to for every game screen.
 boolean gameStart=true;
 boolean level2Start=true;
 boolean level3Start=true;
 boolean gameComplete=true;
+
+//Counts the bounces for each level
 int bounceCount;
 int bounceCount2;
 int bounceCount3;
+
+//Level variable 
 int LEVEL=1;
 
 
@@ -60,7 +79,7 @@ void setup() {
   heavenTheme= minim.loadFile("Heaven_Theme.mp3");
   winner= minim.loadFile("Winner_Theme.mp3");
 
-
+//Start level 1 with 10 platforms.
   p=new ArrayList();
   p.add(new Platform(gray, width/2, 700));
   p.add(new Platform(gray, random(width), 600));
@@ -73,11 +92,13 @@ void setup() {
   p.add(new Platform(gray, random(width), -200));
   p.add(new Platform(gray, random(width), -350));
 
+//Super Platform spawns off screen.
   sP=new ArrayList();
   sP.add(new superPlatform(green, random(width), -300));
 
+//Created the ghost.
   g= new Player(width/2, height/2);
-
+//Same for Level 2 
   p2= new ArrayList();
   p2.add(new Platform2(red, width/2, 700));
   p2.add(new Platform2(red, random(width), 600));
@@ -93,7 +114,7 @@ void setup() {
   sP2. add(new superPlatform2(blue, random(width), -488));
 
   b= new Player2( width/2, height/2);
-
+//And level 3
   p3= new ArrayList();
   p3.add(new Platform3(yellow, width/2, 700));
   p3.add(new Platform3(yellow, random(width), 550));
@@ -107,6 +128,7 @@ void setup() {
   a= new Player3(width/2, height/2);
 }
 void draw() {
+  //When LEVEL= 1, the first screen appears.
   if (LEVEL==1) {
     if (gameStart==true) {
 
@@ -114,6 +136,7 @@ void draw() {
       textSize(50);
       text("Click to Start", 150, height/2);
     }
+//When you click, the game starts.
     if (mousePressed) {
       ghostTheme.loop();
       gameStart=false;
@@ -123,7 +146,7 @@ void draw() {
       game();
     }
   }
-
+//When you reach 50 bounces on level 1, the level 2 starts. 
   if (bounceCount>=50) {
     LEVEL=2;
   }
@@ -150,6 +173,8 @@ void draw() {
       text("Bounces:", 300, 100);
     }
   }
+  
+//After 50 bounces on level 2, level 3 begins.
   if (bounceCount2>=50) {
     LEVEL=3;
   }
@@ -175,6 +200,7 @@ void draw() {
       text("Bounces:", 300, 100);
     }
   }
+//LEVEL 4 is the winner screen with music playing.
   if (bounceCount3>=50) {
     LEVEL=4;
   }
@@ -191,13 +217,14 @@ void draw() {
 }
 
 
-
+//Created the game function.  This is level 1 on the game.
 void game() { 
   image(graveyard, 0, 0);
   textSize(37);
   fill(255);
   text(bounceCount, 525, 100);
   text("Bounces:", 300, 100); 
+//Created a for loop to spawn the platforms
   for (int i=0; i<p.size(); i++) {
     g.bounce((Platform)p.get(i));
     ((Platform)p.get(i)).display();
@@ -214,7 +241,7 @@ void game() {
   morePlatforms();
   restart();
 }
-
+//Made a similar function for level 2. 
 void level2() {
 
   for (int i=0; i<p2.size(); i++) {
@@ -233,7 +260,7 @@ void level2() {
   morePlatforms2();
   restart();
 }
-
+//And for level 3.
 void level3() {
   for (int i=0; i<p3.size(); i++) {
     a.bounce((Platform3)p3.get(i));
@@ -252,7 +279,7 @@ void level3() {
   restart();
 }
 
-
+//This adjust function makes the platforms scroll down whenever the character exceeds the height.
 void adjust() {
   float heightLimit = height/2 - g.y;
   if (heightLimit>0) {
