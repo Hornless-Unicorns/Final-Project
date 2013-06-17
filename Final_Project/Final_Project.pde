@@ -302,20 +302,22 @@ void adjust() {
     }
   }
 }
-
+//There are two different methods for removing platforms.
 void remove() {
+//Whenver the character bounces on it, the platform is removed.
   for (int i=p.size()-1; i>=0; i--) {
     if (g.bounce((Platform)p.get(i))) {
       p.remove(i);
     }
   }
-
+//Platforms also remove when they go past the bottom of the screen.
   for (int i =p.size()-1; i>=0; i--) {
     if (((Platform)p.get(i)).y>height) {
 
       p.remove(i);
     }
   }
+//Same for superplatforms.
   for (int j=sP.size()-1; j>=0; j--) {
     if (g.superBounce((superPlatform)sP.get(j))) {
       sP.remove(j);
@@ -328,6 +330,8 @@ void remove() {
   }
 }
 
+//Whenever there are less than 10 platforms and 1 superplatform, this function spawns a platform at a random x position and a y position of -100
+//and a new superplatform at a ramdom x position and a y positon of -1000
 void morePlatforms() {
   if (p.size() < 10) {
     p.add(new Platform(gray, random(width), -100));
@@ -336,7 +340,7 @@ void morePlatforms() {
     sP.add(new superPlatform(green, random(width), -1000));
   }
 }
-
+//If any of the characters fall, if you press r, the game will restart on the level you lost on. 
 void restart() {
   if (g.y>=height || b.y>height || a.y>height) {
     if (keyPressed) {

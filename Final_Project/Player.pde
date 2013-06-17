@@ -1,3 +1,4 @@
+//Player class
 class Player {
   float x;
   float y;
@@ -40,9 +41,7 @@ class Player {
   void jump() {
     y=y+yspeed;
     yspeed=yspeed+gravity;
-    //    if (y+l/2>height) {
-    //      yspeed=-(yspeed)*.975;
-    //    }
+   
 
 
     if (keyPressed) {
@@ -63,7 +62,7 @@ class Player {
     }
   }
 
-
+//If the character hits a platform and its yspeed is more than 0, it will bounce up and increase the bounce count. 
   boolean bounce(Platform p) {
     if (x< p.x + p.w && x + w> p.x && y+l/2+l/4  < p.y + p.l && y + l> p.y && yspeed>0) {
       
@@ -77,7 +76,7 @@ class Player {
       return false;
     }
   }
-
+//Same for superbounces, however the bouncecount goes up by 5.
   boolean  superBounce(superPlatform sP) {
     if(x< sP.x + sP.w && x + w> sP.x && y+l/2+l/4  < sP.y + sP.l && y + l> sP.y && yspeed>0) {
         yspeed=-bounceVel2;
@@ -88,7 +87,7 @@ class Player {
         return false;
       }
     }
-  
+//Game over boolean when the player loses.   
     boolean gameover() {
       if (y>=height) {
         background(0);

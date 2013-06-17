@@ -47,11 +47,7 @@ class Player2 {
   void jump() {
     y=y+yspeed;
     yspeed=yspeed+gravity;
-    //    if (y+l/2>height) {
-    //      yspeed=-(yspeed)*.975;
-    //    }
-
-
+   
     if (keyPressed) {
       if (key==CODED) {
         if (keyCode==RIGHT) {

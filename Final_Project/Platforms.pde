@@ -1,3 +1,4 @@
+//Class for the platforms.
 class Platform {
   float x;
   float y;
@@ -26,7 +27,7 @@ class Platform {
     y=y+ySpeed;
   }
 }
-
+//Super platform class
 class superPlatform{
   float x;
   float y;
