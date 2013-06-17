@@ -124,7 +124,7 @@ void draw() {
     }
   }
 
-  if (bounceCount>=100) {
+  if (bounceCount>=50) {
     LEVEL=2;
   }
   if (LEVEL==2) {
@@ -150,7 +150,7 @@ void draw() {
       text("Bounces:", 300, 100);
     }
   }
-  if (bounceCount2>=100) {
+  if (bounceCount2>=50) {
     LEVEL=3;
   }
   if (LEVEL==3) {
