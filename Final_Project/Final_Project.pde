@@ -1,5 +1,6 @@
 //Bring Bloo back from the depths of the cartoon grave to cartoon heaven in this game where you bounce him higher.
 //Use the arrow keys to guide bloo to the top of cartoon heaven.
+//You can go through one side to end up on the other.
 //After 50 bounces on each level, you will proceed to the next one.
 //There are three levels in total.
 
@@ -105,10 +106,10 @@ void setup() {
   p2.add(new Platform2(red, random(width), 400));
   p2.add(new Platform2(red, random(width), 200));
   p2.add(new Platform2(red, random(width), 0));
-  p2.add(new Platform2(red, random(width), -250));
-  p2.add(new Platform2(red, random(width), -500));
-  p2.add(new Platform2(red, random(width), -700));
-  p2.add(new Platform2(red, random(width), -900));
+  p2.add(new Platform2(red, random(width), -150));
+  p2.add(new Platform2(red, random(width), -300));
+  p2.add(new Platform2(red, random(width), -450));
+  p2.add(new Platform2(red, random(width), -600));
 
   sP2= new ArrayList();
   sP2. add(new superPlatform2(blue, random(width), -488));
@@ -117,10 +118,10 @@ void setup() {
 //And level 3
   p3= new ArrayList();
   p3.add(new Platform3(yellow, width/2, 700));
-  p3.add(new Platform3(yellow, random(width), 550));
-  p3.add(new Platform3(yellow, random(width), 340));
-  p3.add(new Platform3(yellow, random(width), 190));
-  p3.add(new Platform3(yellow, random(width), -80));
+  p3.add(new Platform3(yellow, random(100,400), 550));
+  p3.add(new Platform3(yellow, random(100,400), 340));
+  p3.add(new Platform3(yellow, random(100,400), 190));
+  p3.add(new Platform3(yellow, random(100,400), -80));
 
   sP3=new ArrayList();
   sP3.add(new superPlatform3(purple, random(width), -1000));
@@ -403,7 +404,7 @@ void remove2() {
 
 void morePlatforms2() {
   if (p2.size() < 7) {
-    p2.add(new Platform2(red, random(width), -150));
+    p2.add(new Platform2(red, random(100,400), -150));
   }
   if (sP2.size()<1) {
     sP2.add(new superPlatform2(blue, random(width), -1500));
